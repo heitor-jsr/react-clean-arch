@@ -1,0 +1,32 @@
+em clean arch, as regras de neǵocio devem ser definidas dentro de interfaces (domain layer), e nao classes. isso permite que voce traga, dentro dessas interfaces, o que é considerado indispensavel para a sua aplicação, de acordo com as regras de negocio. voce vai dizer como algo deve funcionar, para que outra camada implemente esse algo. é aqui que voce traz as assinaturas de metodos e atributos indispensveis às classes. a sua regra de negocio nao fica acoplada a qualquer tipo de implementação de código.
+
+assim, a camada externa (data layer) fica responsavel por implementar aquilo que é definido dentro da interface, de forma que se algo precisar ser alterado a nivel de código, voce nao precisa alterar as suas regras de negocio. é na data layer que vamos ter as implementações dos casos de uso da sua aplicação.
+
+dessa forma, a data layer vai depender do domain layer para ser implementada.
+
+é na data layer que voce vai, por exemplo, tratar as respostas enviadas pela api e os erros que porventura surgirem.
+
+OBS: o data layer nao deve ser acoplado à sua api. ou seja, nao é ele que ira realizar as requests e receber as responses da sua api. a única coisa que ele faz é tratar aquilo que a aplicação recebe como resposta. para realizar essa desacoplação, é necessario definir uma interface para a data layer que vai trazer as regras de uso para ser realizado o acesso ao api. com isso, outra entidade, fora do data layer, vai implementar a interface e realizar a requisição da forma definida pela interface da data layer.
+
+mais externamente, temos a camada de infra, que é onde iremos fazer o uso de frameworks externos. é nesse momento que iremos implementar as interfaces definidas pela data layer. essas implementações vão depender de uma biblioteca externa para funcionar, como o axios ou o express (a ideia é essa, mas nem sempre vamos usar uma biblioteca de terceiro - por ex., podemos usar o fetch que nao depende de uma biblioteca de terceiro). por implementar a interface definida pelo data layer, a camada de infra depende diretamente da data layer e só conhece ela. assim, as camadas mais externas da sua aplicação não possuem qualquer relação com as mais internas.
+
+a presentation layer é a responsavel por receber os dados de resposta da api e converter eles para um formato que a tela da sua aplicação precisa para fazer alimentar a sua aplicação. em projetos mais desacoplados, voce vai ter uma presentation layer e uma ui layer. a ui layer vai simplesmente receber os dados da presentation e renderiza-los na tela. todavia, ao trabalhar com o react é um pouco dificil voce dividir essas responsabilidades, justamente por conta dos hooks e ferramentas que o react disponibiliza. assim, em react vc vai ter apenas a camada de presentation, que vai realizar tanto a conversao dos dados que vem da api para um formato que a sua tela necessita quanto a renderização dos dados. nessa camada de apresentação nos vamos ter um coponente principal que depende do caso de uso definido na camada de dominio.
+
+ao realizar todo esse desacoplamento, a camada de dominio acaba nao dependendo de ninguem. e é essa a ideia: que a domain layer seja a principal layer de sua aplicação e que ela não deve depender de ninguem.
+
+outro ponto importante é que o seu componente principal, definido na presentation layer, vai depender de uma abstração definida na domain layer. porem, o seu componente principal nao pode realizar a implementação dessa abstração diretamente. ele vai depender de outra entidade para realizar isso. caso contrário, a sua presentation vai ficar acoplada a uma classe concreta e não a uma abstração.
+
+as logicas de validação devem ser direcionadas para uma outra camada, chamada de validation. isso permite que, caso voce decida trocar o react por outro framework, nao precisa reescrever toda a validação que já havia feito. por isso, o seu componente principal vai ter que criar uma abstração a ser implementada pelos metodos de validação. isso vai fazer com que as regras de validação sejam abstraidas da camada de validação, que apenas devem implementalas e devolver a resposta esperada pela camada de presentation, onde fica o componente principal. nesse projeto, essa abstração de validação vai observar o design pattern composite, que é a composição de objetos similares. nesse contexto de validação, todos as pequenas validações vão ser injetadas em um único objeto - o composite, que vai conter e observar todas as regras de validação definidas pela abstradação criada na camada de presentation.
+
+veja que até agora criamos camadas onde há apenas a existencia da dependencia de uma unica camada.
+
+main layer
+o main layer é a camada responsavel por orquestrar todas as demais camadas, tornando possivel o funcionamento da aplicação. é nessa camada que nos iremos instanciar as classes que são criadas nas demais camadas, para implementar as nossas abstrações e tornar funcional a aplicação. 
+
+geralmente, na main layer teremos o uso de design patterns, como o  composition route, onde vamos ter 'fábricas' de instâncias das classes que criamos, permitindo o seu funcionamento. no caso de uma tela de login, podemos ter o loginFactory na main layer, que é onde iremos instanciar todas as classes criadas nas outras camadas, permitindo o acesso aos seus atributos e metodos.
+
+é atraves desse loginFactory que o main layer viabiliza e realiza as dependency injections
+
+com esse design pattern, a main layer é o ponto de entrada da sua aplicação, devendo ser acoplada a todas as outras camadas para conseguir manter essas outras camadas desacopladas.
+
+esse ponto de entrada vai ser definido dentro do arquivo index da main layer.
