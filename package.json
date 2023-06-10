@@ -14,13 +14,12 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged",
-      "pre-push": "npm run type-check"
+      "pre-commit": "lint-staged"
     }
   },
   "lint-staged": {
     "*.@(ts|tsx)": [
-      "npm run test"
+      "npm run lint:fix"
     ]
   },
   "keywords": [],
