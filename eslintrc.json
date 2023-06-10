@@ -1,6 +1,6 @@
 {
   "extends": "standard-with-typescript",
-  "parser": "@babel/eslint-parser",
+  "parser": "babel-eslint",
   "parserOptions": { 
     "project": "./tsconfig.json",
     "sourceType": "module",
