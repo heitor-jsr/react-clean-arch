@@ -1,4 +1,4 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-Add your coomand here ie lint staged  npm test etc
+npx lint-staged
