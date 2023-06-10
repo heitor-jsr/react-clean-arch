@@ -3,7 +3,7 @@ import { HttpPostParams, HttpPostClient } from "../protocols/http/http-post-clie
 export default class HttpClientSpy implements HttpPostClient {
   url?: string
   async post(params: HttpPostParams): Promise<void> {
-    this.url = params.url
+    this.url = params
     return Promise.resolve()
   }
 }
