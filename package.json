@@ -7,7 +7,8 @@
     "test": "jest --passWithNoTests",
     "test:watch": "npm test -- --watch",
     "test:staged": "npm test -- --findRelatedTests",
-    "test:ci": "npm test -- --coverage"
+    "test:ci": "npm test -- --coverage",
+    "prepare": "husky install"
   },
   "keywords": [],
   "author": "",
@@ -33,14 +34,14 @@
   },
   "husky": {
     "hooks": {
-        "pre-commit": "lint-staged",
-        "pre-push": "npm test"
+      "pre-commit": "lint-staged",
+      "pre-push": "npm test"
     }
   },
   "lint-staged": {
     "*.{ts,tsx}": [
-    "eslint 'src/**' --fix",
-    "npm run test:staged"
+      "eslint 'src/**' --fix",
+      "npm run test:staged"
     ]
   }
 }
