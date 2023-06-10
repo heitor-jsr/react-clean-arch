@@ -1,3 +1,5 @@
-// export type AccountModel = {
-//   accessToken: string
-// }
+type AccountModel = {
+  accessToken: string
+}
+
+export default AccountModel
