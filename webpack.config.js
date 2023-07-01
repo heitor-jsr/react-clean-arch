@@ -10,12 +10,32 @@ module.exports = {
     filename: "bundle.js"
   },
   resolve: {  
-    extensions: [".ts", ".tsx", ".js"],
+    extensions: [".ts", ".tsx", ".js", "scss"],
     // por usar os paths indicando o @ nos imports, precimaos incluir um alias pra informar isso no webpack, se não ele se
     // perde ao tentar localizar os imports com os @ no inicio. isso vai substituir todos os @ com o src
     alias: {
       "@": path.join(__dirname, "src")
     }
+  },
+  module: {
+    rules: [{
+      test: /\.ts(x?)$/,
+      loader: "ts-loader",
+      exclude: /node_modules/
+    }, {
+      test: /\.scss$/,
+      use: [{
+        loader: "style-loader"
+      }, {
+        loader: "css-loader",
+        options: {
+          modules: true
+        }
+      }, {
+        loader: "sass-loader"
+      },
+    ]
+    }]
   },
   // precisamos configurar o devServer d o webpack, porque quando ele roda pela primeira vez, ele identifica como
   // a pasta source do projeto a pasta onde estão todos os arquivos, e não a public propriamente dita, que é o ponto de
