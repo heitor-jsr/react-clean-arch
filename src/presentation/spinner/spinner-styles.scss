@@ -1,11 +1,10 @@
-@import "../../styles/colors.scss";
+  @import "@/presentation/styles/colors.scss";
 
 .spinner {
   display: inline-block;
   position: relative;
   width: 80px;
   height: 13px;
-
   div {
     position: absolute;
     top: 0px;

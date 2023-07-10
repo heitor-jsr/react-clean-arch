@@ -41,10 +41,14 @@ module.exports = {
   // a pasta source do projeto a pasta onde estão todos os arquivos, e não a public propriamente dita, que é o ponto de
   // entrada da aplicação a ser renderizada pelo navegador.
   devServer: {
-    contentBase: path.join(__dirname, "public"),
+    static: {
+      directory: path.join(__dirname, "public"),
+    },
     // por padrao, o devServer nao gera os arquivos do bundle fisicamente, ele só salva eles na memoria. pra isso, precisamos
     // incluir a configuração abaixo, para dizer ao webpack para gerar o bundle fisicamente e levantar o servidor.
-    writeToDisk: true,
+    devMiddleware: {
+          writeToDisk: true,
+      },
     // necessario para os casos em que trabalharemos com rotas - react router dom.
     historyApiFallback: true
   },
