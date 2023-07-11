@@ -1,42 +1,6 @@
 @import "../../styles/colors.scss";
 
-* {
-  font-family: 'Roboto', sans-serif;
-  font-size: 14px;
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
-}
-
-body {
-  background-color: $background;
-}
-
-input[type="password"],
-input[type="email"] {
-  border: 1px solid $primaryLight;
-  line-height: 40px;
-  border-radius: 4px;
-  padding: 0px 40px 0px 8px;
-
-  &:focus {
-    outline-color: $primaryLight;
-  }
-}
-
-.header {
-  display: flex;
-  flex-direction: column;
-  border-top: 40px solid $primaryDark;
+.footer {
   background-color: $primary;
-  align-items: center;
-
-  img {
-    margin-top: 40px;
-  }
-
-  h1 {
-    color: $white;
-    margin: 16px 0px 40px;
-  }
+  height: 48px;
 }
