@@ -7,9 +7,12 @@ import Login from "./Login"
 // passe, independente do que você estiver utilizando para renderizar os seus componentes.
 
 describe('Login component', () => {
-  test('Should mock render spinner and error on start', () => {
+  test('Should start with inital state', () => {
     const { getByTestId } = render(<Login />)
     const errorWrap = getByTestId('error-wrap')
     expect(errorWrap.childElementCount).toBe(0)
+    const submitButton = getByTestId('submit') as HTMLButtonElement
+    expect(submitButton.disabled).toBe(true)
+
   })
 })
