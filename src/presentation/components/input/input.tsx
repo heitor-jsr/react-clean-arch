@@ -1,19 +1,31 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import Styles from './input-styles.scss'
-
+import Context from '@/presentation/components/contexts/form/form-context'
 // o tipo da props tem que ser igual ao tipo do elemento html que vc cria com o
 // react. para isso, basta passar o mouse em cima do elemento que ele te informa
 // as informações do tipo da props
+import PropTypes from 'prop-types';
 
 type Props = React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>
 
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const Input: React.FC<Props> = (props: Props) => {
+  const { errorState } = useContext(Context)
+  const error = errorState[props.name]
+
+  const getStatus = (): string => {
+    return '🔴'
+  }
+
+  const getTitle = (): string => {
+    return error
+  }
+
   return (
     <div className={Styles.inputWrap}>
       <input {...props} />
-      <span className={Styles.status}>🔴</span>
+      <span data-testid={`${props.name}-status`} title={getTitle()} className={Styles.status}>{getStatus()}</span>
     </div>
     )
 }
@@ -22,4 +34,9 @@ const Input: React.FC<Props> = (props: Props) => {
 // usa-se o useCallback. agora, para memorizar um componente, usa-se o memo. assim,
 // o componente abrangido pelo memo somente será renderizado novamente quando houver
 //  alguma alteração em seu estado ou em uma prop.
+
+Input.propTypes = {
+  name: PropTypes.string.isRequired,
+  title: PropTypes.string,
+}
 export default Input
