@@ -2,23 +2,14 @@ import React from "react"
 import { faker } from "@faker-js/faker"
 import { render, RenderResult, fireEvent, cleanup } from '@testing-library/react'
 import Login from "./Login"
-import { ValidationStub } from "@/presentation/test"
-import { Authentication, AuthenticationParams } from "@/domain/usecases"
-import { AccountModel } from "@/domain/models"
-import { mockAccountModel } from "@/domain/test"
+import { ValidationStub, AuthenticationSpy } from "@/presentation/test"
+
 
 // o teste deve ser independente dos hooks do react. por isso, deve-se evitar ao max
 // importa-los e usar eles dentro dos arquivos de teste. isso garante que seu teste
 // passe, independente do que você estiver utilizando para renderizar os seus componentes.
 
-class AuthenticationSpy implements Authentication {
-  account = mockAccountModel()
-  params: AuthenticationParams
-  async auth (params: AuthenticationParams): Promise<AccountModel> {
-    this.params = params
-    return Promise.resolve(this.account)
-  }
-}
+
 
 type SutTypes = {
   sut: RenderResult,
