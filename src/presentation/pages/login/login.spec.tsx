@@ -1,7 +1,7 @@
 import React from "react"
 import { render, RenderResult, fireEvent, cleanup } from '@testing-library/react'
 import Login from "./Login"
-import { Validation } from "@/presentation/protocols/validation"
+import { ValidationSpy } from "@/presentation/test"
 
 // o teste deve ser independente dos hooks do react. por isso, deve-se evitar ao max
 // importa-los e usar eles dentro dos arquivos de teste. isso garante que seu teste
@@ -10,18 +10,6 @@ import { Validation } from "@/presentation/protocols/validation"
 type SutTypes = {
   sut: RenderResult
   validationSpy: ValidationSpy
-}
-
-class ValidationSpy implements Validation {
-  errorMessage: string
-  fieldName: string
-  fieldValue: string
-  validate(fieldName: string, fieldValue: string): string {
-    this.fieldName = fieldName
-    this.fieldValue = fieldValue
-    return this.errorMessage
-  }
-
 }
 
 const makeSut = (): SutTypes => {
