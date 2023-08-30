@@ -2,6 +2,7 @@ import React from "react"
 import { render, RenderResult, fireEvent, cleanup } from '@testing-library/react'
 import Login from "./Login"
 import { ValidationSpy } from "@/presentation/test"
+import { faker } from "@faker-js/faker"
 
 // o teste deve ser independente dos hooks do react. por isso, deve-se evitar ao max
 // importa-los e usar eles dentro dos arquivos de teste. isso garante que seu teste
@@ -41,17 +42,19 @@ describe('Login component', () => {
   test('Should call validation with correct email value', () => {
     const { sut, validationSpy } = makeSut()
     const emailInput = sut.getByTestId('email')
-    fireEvent.input(emailInput, { target: { value: 'any_email@example.com' } })
+    const email = faker.internet.email()
+    fireEvent.input(emailInput, { target: { value: email } })
     expect(validationSpy.fieldName).toBe('email')
-    expect(validationSpy.fieldValue).toBe('any_email@example.com')
+    expect(validationSpy.fieldValue).toBe(email)
   })
 
   test('Should call validation with correct password value', () => {
     const { sut, validationSpy } = makeSut()
     const passwordInput = sut.getByTestId('password')
-    fireEvent.input(passwordInput, { target: { value: '12345678' } })
+    const password = faker.internet.password()
+    fireEvent.input(passwordInput, { target: { value: password } })
     expect(validationSpy.fieldName).toBe('password')
-    expect(validationSpy.fieldValue).toBe('12345678')
+    expect(validationSpy.fieldValue).toBe(password)
   })
 
 
