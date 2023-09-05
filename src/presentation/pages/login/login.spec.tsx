@@ -140,6 +140,11 @@ describe('Login component', () => {
       new Promise((_, reject) => reject(error)))
     simulateValidSubmit(sut)
     const errorWrap = sut.getByTestId('error-wrap')
+    // sempre que tivermos problemas com assincronicidade no teste, é bom usarmos o waitFor,
+    // que vai mandar o código aguardar até que o elemento dentro de seu bloco de código
+    // apresente alguma alteração. não é certo colocar o elemento a ser renderizado, porque isso vai dar BO
+    // o certo é colocar uma listener de um elemento que vai sofrer alguma alteração depois da chamada 
+    // async, e ver se o teste passa.
     await waitFor(() => {
       errorWrap
     })
